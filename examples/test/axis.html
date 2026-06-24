@@ -5,11 +5,11 @@
     <title>MathBox - Axis</title>
     <script
       type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/three@0.137.0/build/three.min.js"
+      src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"
     ></script>
     <script
       type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/controls/OrbitControls.js"
+      src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/controls/OrbitControls.js"
     ></script>
     <!--
       - a minified version mathbox.min.js is also available;
@@ -38,7 +38,7 @@
       });
       three = mathbox.three;
 
-      three.camera.position.set(-0.15, 0.15, 3.6);
+      three.camera.position.set(1.5, 0.8, 4);
       three.renderer.setClearColor(new THREE.Color(0xffffff), 1.0);
 
       colors = {
@@ -54,11 +54,11 @@
         })
         .cartesian({
           range: [
-            [-2, 2],
+            [-1, 1],
             [-1, 1],
             [-1, 1],
           ],
-          scale: [2, 1, 1],
+          scale: [1, 1, 1],
         });
       view.axis({
         color: colors.x,
