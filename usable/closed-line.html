@@ -36,10 +36,10 @@
       three.renderer.setClearColor(new THREE.Color(0xffffff), 1.0);
 
       view = mathbox
-        // .set({
-        //   scale: 2000,
-        //   focus: 3,
-        // })
+        .set({
+          scale: 720,
+          focus: 3,
+        })
         .cartesian({
           range: [
             [-1, 1],
@@ -67,9 +67,11 @@
         .line({
           closed: true,
           color: 'blue',
-          width: 20,
+          width: 5,
           join: "miter",
-        });
+        })
+        // .end()
+        ;
 
       view
         .transform({
@@ -77,8 +79,8 @@
           scale: [0.5, 0.5, 0.5],
         })
         .line({
-          color: "blue",
-          width: 15,
+          color: "yellow",
+          width: 5,
           join: "miter",
         });
 
@@ -90,8 +92,8 @@
         .line({
           closed: true,
           // color: 0x50bf30,
-          color: "green",
-          width: 15,
+          color: "purple",
+          width: 5,
           join: "round",
         });
 
@@ -102,7 +104,7 @@
         })
         .line({
           color: "green",
-          width: 15,
+          width: 5,
           join: "round",
         });
 
@@ -114,7 +116,7 @@
         .line({
           closed: true,
           color: "red",
-          width: 15,
+          width: 5,
           join: "bevel",
         });
 
@@ -125,7 +127,7 @@
         })
         .line({
           color: "red",
-          width: 15,
+          width: 5,
           join: "bevel",
         });
 
@@ -138,7 +140,7 @@
         .line({
           closed: true,
           color: "blue",
-          width: 15,
+          width: 5,
           join: "miter",
           start: true,
           end: true,
@@ -150,7 +152,7 @@
         })
         .line({
           color: "blue",
-          width: 15,
+          width: 5,
           join: "miter",
           start: true,
           end: true,
@@ -163,7 +165,7 @@
         .line({
           closed: true,
           color: "green",
-          width: 15,
+          width: 5,
           join: "round",
           start: true,
           end: true,
@@ -175,7 +177,7 @@
         })
         .line({
           color: "green",
-          width: 15,
+          width: 5,
           join: "round",
           start: true,
           end: true,
@@ -188,7 +190,7 @@
         .line({
           closed: true,
           color: "red",
-          width: 15,
+          width: 5,
           join: "bevel",
           start: true,
           end: true,
@@ -200,7 +202,7 @@
         })
         .line({
           color: "red",
-          width: 15,
+          width: 5,
           join: "bevel",
           start: true,
           end: true,
