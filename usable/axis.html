@@ -12,6 +12,7 @@
       - recommend using a specific version (not @latest) in public sites
     -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathbox@latest/build/bundle/mathbox.js"></script>
+  <script src="draw-utils.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mathbox@latest/build/mathbox.css" />
   <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
 </head>
@@ -24,71 +25,73 @@
         klass: THREE.OrbitControls,
       },
       camera: {
-        fov: 45,
+        fov: 60,
       },
     });
     three = mathbox.three;
 
-    three.camera.position.set(6, 2, 3);
+    three.camera.position.set(4, 2, 2);
     three.renderer.setClearColor(new THREE.Color(0xffffff), 1.0);
 
     colors = {
-      x: new THREE.Color(0.6, 0.6, 0.6),
-      y: new THREE.Color(0.6, 0.6, 0.6),
-      z: new THREE.Color(0.6, 0.6, 0.6),
-      // mg: new Three.Color(0.3,0.3,0.3),
-      // x: new THREE.Color(0xff4136),
-      // y: new THREE.Color(0x2ecc40),
-      // z: new THREE.Color(0x0074d9),
+      axis: new THREE.Color(0.6, 0.6, 0.6),
+      grid: new THREE.Color(0.9, 0.9, 0.9),
+      frame: new THREE.Color(0.8, 0.8, 0.8),
+      labels: new THREE.Color(0.6, 0.6, 0.6),
     };
 
+    var rangeX = 1;
+    var rangeY = 1;
+    var rangeZ = 1;
+
     view = mathbox
-      // .set({
-      //   scale: 720,
-      //   focus: 1,
-      // })
+      .set({
+        scale: 720,
+        focus: 1,
+      })
       .cartesian({
         range: [
-          [-1, 1],
-          [-1, 1],
-          [-1, 1],
+          [-rangeX, rangeX],
+          [-rangeY, rangeY],
+          [-rangeZ, rangeZ],
         ],
         scale: [1, 1, 1],
       });
+
     view.axis({
-      color: colors.x,
+      axis: 1,
     });
     view.axis({
       axis: 2, // "y" also works
-      color: colors.y,
     });
     view.axis({
       axis: 3,
-      color: colors.z,
     });
 
     mathbox
       .select("axis")
       .set("end", true)
-      .set("width", 9)
+      .set("width", 8)
+      .set("color", colors.axis)
       // .bind("depth", function (t) {
       //   return 0.5 + 0.5 * Math.sin(t * 0.5);})
       ;
 
-    view.array({
-      id: "colors",
-      live: false,
-      data: [colors.x, colors.y, colors.z].map(function (color) {
-        return [color.r, color.g, color.b, 1];
-      }),
-    });
+    // view.array({
+    //   id: "colors",
+    //   live: false,
+    //   data: [colors.x, colors.y, colors.z].map(function (color) {
+    //     return [color.r, color.g, color.b, 1];
+    //   }),
+    // });
 
+    var offset_coefficient = 1.05;
     view
       .array({
         data: [
-          [1.05, 0, 0],
-          [0, 1.05, 0],
-          [0, 0, 1.05],
+          [rangeX * offset_coefficient, 0, 0],
+          [0, rangeY * offset_coefficient, 0],
+          [0, 0, rangeZ * offset_coefficient],
         ],
         channels: 3, // necessary
         live: false,
@@ -97,8 +100,8 @@
         data: ["x", "y", "z"],
       })
       .label({
-        color: 0xffffff,
-        colors: "#colors",
+        color: colors.labels,
+        // colors: "#colors",
         offset: [0, 0],
       });
 
@@ -110,7 +113,7 @@
       .grid({
         axes: [1, 3],
         width: 1,
-        color: [0.8, 0.8, 0.8],
+        color: colors.grid,
         depth: 0.5,
         divideX: 10,
       })
@@ -118,13 +121,7 @@
 
 
     // 绘制边框
-    function drawRect(view, points, position) {
-      view.array({ data: points, channels: 3, live: false });
-      view
-        .transform({ position, scale: [1, 1, 1] })
-        .line({ closed: true, color: [0.8, 0.8, 0.8], width: 2, join: "miter" })
-        .end();
-    }
+
 
     var rectXZ = [[1, 0, 1], [1, 0, -1], [-1, 0, -1], [-1, 0, 1]];
     var rectXY = [[1, 1, 0], [-1, 1, 0], [-1, -1, 0], [1, -1, 0]];
@@ -133,6 +130,12 @@
     drawRect(view, rectXZ, [0, -1, 0]);  // 下
     drawRect(view, rectXY, [0, 0, 1]);  // 前
     drawRect(view, rectXY, [0, 0, -1]);  // 后
+
+
+
+    drawCirc(view, 0, 0, 0.5, "xy", 0.5, 1)
+
+    drawCirc(view, 0, 0.5, 0, "xz", 0.5, 1)
 
 
     // 旋转动画
