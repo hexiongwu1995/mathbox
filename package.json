@@ -1,10 +1,10 @@
 {
-  "name": "mathbox",
-  "version": "2.3.1",
+  "name": "shit_on_mathbox",
+  "version": "0.0.1",
   "description": "Presentation-quality WebGL math graphing",
   "repository": {
     "type": "git",
-    "url": "https://github.com/unconed/mathbox"
+    "url": "https://github.com/hexiongwu1995/mathbox"
   },
   "module": "./build/esm/index.js",
   "exports": {
