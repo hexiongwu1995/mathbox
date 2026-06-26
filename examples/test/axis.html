@@ -117,6 +117,7 @@
       .end()
 
 
+    // 绘制边框
     function drawRect(view, points, position) {
       view.array({ data: points, channels: 3, live: false });
       view
@@ -134,20 +135,21 @@
     drawRect(view, rectXY, [0, 0, -1]);  // 后
 
 
-    var camera = view.camera(
-      {
-        lookAt: [0, 0, 0],
-      },
-      {
-        position: function (t) {
-          return [
-            6 * Math.cos(0.1 * t),
-            2,
-            -6 * Math.sin(0.1 * t),
-          ];
-        },
-      }
-    );
+    // 旋转动画
+    // var camera = view.camera(
+    //   {
+    //     lookAt: [0, 0, 0],
+    //   },
+    //   {
+    //     position: function (t) {
+    //       return [
+    //         6 * Math.cos(0.1 * t),
+    //         2,
+    //         -6 * Math.sin(0.1 * t),
+    //       ];
+    //     },
+    //   }
+    // );
   </script>
 </body>
 
