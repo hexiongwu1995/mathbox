@@ -11,7 +11,8 @@
       - a minified version mathbox.min.js is also available;
       - recommend using a specific version (not @latest) in public sites
     -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/shit_on_mathbox@latest/build/bundle/mathbox.js"></script>
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/shit_on_mathbox@latest/build/bundle/mathbox.js"></script>
   <script src="draw-utils.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shit_on_mathbox@latest/build/mathbox.css" />
   <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
@@ -46,8 +47,8 @@
 
     view = mathbox
       .set({
-        scale: 720,
-        focus: 1,
+        scale: 1800,
+        focus: 5,
       })
       .cartesian({
         range: [
@@ -58,24 +59,21 @@
         scale: [1, 1, 1],
       });
 
-    view.axis({
-      axis: 1,
-    });
-    view.axis({
-      axis: 2, // "y" also works
-    });
-    view.axis({
-      axis: 3,
-    });
+    [1, 2, 3].forEach(element => {
+      view.axis({
+        axis: element, end: true, width: 3, color: colors.axis,
+      })
+    })
 
-    mathbox
-      .select("axis")
-      .set("end", true)
-      .set("width", 8)
-      .set("color", colors.axis)
-      // .bind("depth", function (t) {
-      //   return 0.5 + 0.5 * Math.sin(t * 0.5);})
-      ;
+
+    // mathbox
+    // .select("axis")
+    // .set("end", true)
+    // .set("width", 3)
+    // .set("color", colors.axis)
+    // .bind("depth", function (t) {
+    //   return 0.5 + 0.5 * Math.sin(t * 0.5);})
+    // ;
 
     // view.array({
     //   id: "colors",
@@ -122,7 +120,7 @@
 
     // 绘制边框
 
-    
+
     var rectXZ = [[1, 0, 1], [1, 0, -1], [-1, 0, -1], [-1, 0, 1]];
     var rectXY = [[1, 1, 0], [-1, 1, 0], [-1, -1, 0], [1, -1, 0]];
 
