@@ -30,7 +30,7 @@
     three = mathbox.three;
     three.controls.maxDistance = 10;
     three.camera.position.set(4, 2, 4);
-    three.renderer.setClearColor(new THREE.Color(0xeeeeee), 1.0);
+    three.renderer.setClearColor(new THREE.Color(0xffffff), 1.0);
 
     view = mathbox
       .set({
@@ -51,14 +51,8 @@
         axis: item,
         width: 10,
       })
-      //   .text({
-      //     data:["x", "y","z"],
-      //   })
-      // .label({
-      //   color:[0.6,0.6,0.6],
-      //   offset: [0,0],
-      // });
     });
+
     var offset_coef = 1.05;
     view
       .array({
@@ -77,18 +71,19 @@
       });
 
     var rez = 10;
-    // 生成一个 rez × rez × rez 的体素网格，每个体素携带 4 个数值（RGBA）
-    // 体素是体积元素的含义吗？
+    // rez是resolution的缩写，表示体素网格的分辨率？
+    // 生成一个 rez × rez × rez 的体素网格，每个体素只产生 1 个数据项，每个数据项由 4 个数值组成。
     view.volume({
       id: "volume",
       width: rez,
       height: rez,
       depth: rez,
       items: 1,
+      // items 表示每个空间位置（每个体素 voxel）包含多少个“项”。也可以理解为“w 方向”的大小，或“每个位置的数据点个数”。
       channels: 4,
       live: false,
       expr: function (emit, x, y, z) {
-        emit(x, y, z, 0.2);
+        emit(x, y, z, 0.9);
       },
     });
     view.point({
