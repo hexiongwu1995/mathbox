@@ -1,84 +1,108 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>MathBox - Color Cube</title>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/three@0.137.0/build/three.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/controls/OrbitControls.js"
-    ></script>
-    <!--
+
+<head>
+  <meta charset="utf-8" />
+  <title>MathBox - Color Cube</title>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.137.0/build/three.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/controls/OrbitControls.js"></script>
+  <!--
       - a minified version mathbox.min.js is also available;
       - recommend using a specific version (not @latest) in public sites
     -->
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/mathbox@latest/build/bundle/mathbox.js"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/mathbox@latest/build/mathbox.css"
-    />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
-  </head>
-  <body>
-    <script>
-      // Color Cube by Max Goldstein, CC-BY
-      mathbox = MathBox.mathBox({
-        plugins: ["core", "controls", "cursor"],
-        controls: {
-          klass: THREE.OrbitControls,
-        },
-        camera: {},
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathbox@latest/build/bundle/mathbox.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mathbox@latest/build/mathbox.css" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+</head>
+
+<body>
+  <script>
+    // Color Cube by Max Goldstein, CC-BY
+    mathbox = MathBox.mathBox({
+      plugins: ["core", "controls", "cursor"],
+      controls: {
+        klass: THREE.OrbitControls,
+      },
+      camera: {},
+    });
+
+    three = mathbox.three;
+    three.controls.maxDistance = 10;
+    three.camera.position.set(4, 2, 4);
+    three.renderer.setClearColor(new THREE.Color(0xeeeeee), 1.0);
+
+    view = mathbox
+      .set({
+        scale: 720,
+        focus: 1,
+      })
+      .cartesian({
+        range: [
+          [0, 1],
+          [0, 1],
+          [0, 1],
+        ],
+        scale: [1, 1, 1],
       });
 
-      three = mathbox.three;
-      three.controls.maxDistance = 10;
-      three.camera.position.set(4, 2, 4);
-      three.renderer.setClearColor(new THREE.Color(0xeeeeee), 1.0);
-
-      view = mathbox
-        .set({
-          scale: 720,
-          focus: 1,
-        })
-        .cartesian({
-          range: [
-            [0, 1],
-            [0, 1],
-            [0, 1],
-          ],
-          scale: [1, 1, 1],
-        });
-
-      var rez = 10;
-      view.volume({
-        id: "volume",
-        width: rez,
-        height: rez,
-        depth: rez,
-        items: 1,
-        channels: 4,
+    [1, 2, 3].forEach(item => {
+      view.axis({
+        axis: item,
+        width: 10,
+      })
+      //   .text({
+      //     data:["x", "y","z"],
+      //   })
+      // .label({
+      //   color:[0.6,0.6,0.6],
+      //   offset: [0,0],
+      // });
+    });
+    var offset_coef = 1.05;
+    view
+      .array({
+        data: [[1 * offset_coef, 0, 0], [0, 1 * offset_coef, 0], [0, 0, 1 * offset_coef]],
+        channels: 3,
         live: false,
-        expr: function (emit, x, y, z) {
-          emit(x, y, z, 1);
-        },
+      })
+      .text({
+        data: ["x", "y", "z"],
+      })
+      .label({
+        color: [0.6, 0.6, 0.6],
+        size: 10,
+        outline: 0,
+        offset: [0, 0],
       });
-      view.point({
-        // The neat trick: use the same data for position and for color!
-        // We don't actually need to specify the points source since we just defined them
-        // but it emphasizes what's going on.
-        // The w component 1 is ignored as a position but used as opacity as a color.
-        points: "#volume",
-        colors: "#volume",
-        // Multiply every color component in [0..1] by 255
-        color: 0xffffff,
-        size: 20,
-      });
-    </script>
-  </body>
+
+    var rez = 10;
+    // 生成一个 rez × rez × rez 的体素网格，每个体素携带 4 个数值（RGBA）
+    // 体素是体积元素的含义吗？
+    view.volume({
+      id: "volume",
+      width: rez,
+      height: rez,
+      depth: rez,
+      items: 1,
+      channels: 4,
+      live: false,
+      expr: function (emit, x, y, z) {
+        emit(x, y, z, 0.2);
+      },
+    });
+    view.point({
+      // The neat trick: use the same data for position and for color!
+      // We don't actually need to specify the points source since we just defined them
+      // but it emphasizes what's going on.
+      // The w component 1 is ignored as a position but used as opacity as a color.
+      points: "#volume",
+      colors: "#volume",
+      // Multiply every color component in [0..1] by 255
+      color: 0xffffff,
+      size: 20,
+    });
+  </script>
+</body>
+
 </html>
