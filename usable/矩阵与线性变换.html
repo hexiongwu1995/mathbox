@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
     <title>矩阵与线性变换</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.137.0/build/three.min.js"></script>
     <script type="text/javascript"
@@ -14,7 +15,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathbox@latest/build/bundle/mathbox.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dat.gui@latest/build/dat.gui.min.js"></script>
     <link rel="stylesheet" href="../../build/mathbox.css" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+
     <script src="MathJax-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@4/startup.js" defer></script>
     <!-- AsciiMath的输入语法请参考这个链接： https://asciimath.org/ -->
@@ -22,16 +23,10 @@
 </head>
 
 <body>
-    <h1>平移和旋转变换</h1>
 
-    <p>设点 `P` 的坐标为 `(1,3,0)`，我们将对其进行平移和旋转变换。</p>
-    <div class="display"> `P = ((1),(3),(0))` </div>
-    
-    <div id="gui-container" style="width: 600px; height:200px; margin: 50px auto;"></div>
-    <div id="mathbox-container" style="width: 800px; height: 800px;"></div>
 
     <script>
-        var image = document.getElementById("mathbox-container");
+
         var mathbox = MathBox.mathBox({
             element: image,
             plugins: ["core", "controls", "cursor"],
@@ -52,11 +47,11 @@
         var gui = new dat.GUI({ autoPlace: false });
         document.getElementById("gui-container").appendChild(gui.domElement);
         var props = {
-            angle: 180,
+            angle: Math.PI,
             x: 0,
             z: 0,
         };
-        gui.add(props, "angle").min(0).max(360).step(5);
+        gui.add(props, "angle").min(0).max(2 * Math.PI).step(0.1).onChange(updateRotationText);
         gui.add(props, "x").min(-1).max(1).step(0.05);
         gui.add(props, "z").min(-1).max(1).step(0.05);
 
@@ -118,7 +113,33 @@
             channels: 3,
         });
 
+        var image = document.getElementById("mathbox-container");
+        var rotation = document.getElementById("rotation");
+
+        function updateRotationText() {
+            var cos = Math.cos(props.angle);
+            var sin = Math.sin(props.angle);
+
+            rotation.textContent =
+                'R = [[' +
+                cos.toFixed(3) + ', ' + (-sin).toFixed(3) + ', 0], [' +
+                sin.toFixed(3) + ', ' + cos.toFixed(3) + ', 0], [0, 0, 1]]';
+        }
+
+        updateRotationText();
+
     </script>
+    <h1>平移和旋转变换</h1>
+
+    <p>设点 `P` 的坐标为 `(1,3,0)`，我们将对其进行平移和旋转变换。</p>
+    <div class="display"> `P = ((2),(3),(0))` </div>
+    <div class="display">`Q = P + ((2),(1),(0))`</div>
+    <div class="display" id="rotation">`R = [[Math.cos(props.angle), -Math.sin(props.angle), 0], [Math.sin(props.angle),
+        Math.cos(props.angle), 0], [0, 0, 1]]`
+    </div>
+
+    <div id="gui-container" style="width: 600px; height:200px; margin: 50px auto;"></div>
+    <div id="mathbox-container" style="width: 800px; height: 800px;"></div>
 </body>
 
 </html>
