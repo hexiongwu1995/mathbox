@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="MathJax-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@4/startup.js" defer></script>
+    <!-- AsciiMath的输入语法请参考这个链接： https://asciimath.org/ -->
+    <title>梯度和旋度</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="title-display" style="text-align: center; font-size: 1.5rem; font-weight: 500; margin-bottom: 3rem;"></div>
+    <script>document.getElementById('title-display').textContent = document.title </script>
+
+    <h1>梯度</h1>
+    <p>
+        设 `f: RR^3 -> RR` 是一个标量场，且 `f` 在点 `P(x,y,z)` 的某个邻域内具有一阶连续偏导数。则 `f` 在点 `P` 处的<strong>梯度</strong>（gradient）定义为向量
+    </p>
+    <div class="display">
+        `grad f = ((df)/(dx), (df)/(dy), (df)/(dz))`
+    </div>
+    <p>
+        其中 `nabla = ((d)/(dx), (d)/(dy), (d)/(dz))` 为向量微分算子（Hamilton 算子或 del 算子）。梯度的方向是函数在该点处增长最快的方向，其模 `|nabla f|`
+        等于该方向上的最大方向导数。对任意单位向量 `u`，方向导数为
+    </p>
+    <div class="display">
+        `(df)/(ds) = nabla f cdot u = |nabla f| cos theta`
+    </div>
+    <p>
+        其中 `theta` 为 `nabla f` 与 `u` 之间的夹角。梯度的等值面 `f(x,y,z)=c` 的法向量即为 `nabla f`，这在求解偏微分方程和物理问题（如热传导、电势场）中具有重要应用。
+    </p>
+
+    <h2>梯度的例子</h2>
+    <p>
+        考虑一个二维标量场，即海拔高度函数 `f(x,y) = x^2 + y^2`。该函数描述了一个旋转抛物面，其梯度为
+    </p>
+    <div class="display">
+        `nabla f = (2x, 2y)`
+    </div>
+    <p>
+        梯度的模为 `|nabla f| = 2 sqrt(x^2+y^2)`，方向沿径向向外。这意味着从原点出发，沿径向方向移动时高度增加最快。例如，在点 `(1,0)` 处，梯度为 `(2,0)`，指向正 x 轴方向，模为
+        2；在点 `(0,1)` 处，梯度为 `(0,2)`，指向正 y 轴方向。梯度的方向总是垂直于等高线（等值线），即 `f(x,y)=c` 的法线方向。
+    </p>
+    <p>
+        另一个物理例子是温度场。设空间温度分布为 `T(x,y,z)`，则梯度 `nabla T` 指向温度上升最快的方向，其模表示该方向上的温度变化率。在热传导中，热流密度与温度梯度成正比：`q = -k nabla T`，其中
+        `k` 为热导率。
+    </p>
+
+    <h1>旋度</h1>
+    <p>
+        设 `F = (F_1, F_2, F_3): RR^3 -> RR^3` 是一个向量场，且各分量具有连续一阶偏导数。则 `F` 的<strong>旋度</strong>（curl）定义为
+    </p>
+    <div class="display">
+        ` nabla xx F = |(i, j, k), ((d)/(dx), (d)/(dy), (d)/(dz)), (F_1, F_2, F_3)|`
+    </div>
+    <p>
+        展开后为
+    </p>
+    <div class="display">
+        `nabla xx F = ((dF_3)/(dy) - (dF_2)/(dz), (dF_1)/(dz) - (dF_3)/(dx), (dF_2)/(dx) - (dF_1)/(dy))`
+    </div>
+    <p>
+        旋度衡量向量场在某一点附近的旋转程度。若 `nabla xx F = 0`，则称 `F` 为无旋场（保守场），此时存在标量势函数 `phi` 使得 `F = nabla phi`。由 Stokes 定理，向量场沿闭合曲线
+        `C` 的环量与通过以 `C` 为边界的曲面 `S` 的旋度通量满足
+    </p>
+    <div class="display">
+        `oint_C F cdot dr = int_S (nabla xx F) cdot n \ dS`
+    </div>
+    <p>
+        旋度在流体力学中描述流体微元的刚体旋转角速度，在电磁学中 Maxwell 方程组将磁场的旋度与电流密度和变化的电场联系起来，即 `nabla xx H = J + (dD)/(dt)`。
+    </p>
+
+
+    <!-- <section style="margin: 2rem 0; text-align: center;">
+        <h2>Desmos 3D 图形</h2>
+        <iframe src="https://www.desmos.com/3d/ddmgb11wqz?embed" width="100%" max-width="900" height="600"
+            style="border: 1px solid #ccc;" allowfullscreen>
+        </iframe>
+    </section> -->
+
+
+
+
+    <!-- <section style="margin: 2rem 0;">
+        <h2>Desmos 函数图示例</h2>
+        <div id="calculator" style="width: 100%; max-width: 800px; height: 500px; margin: 0 auto;"></div>
+    </section>
+
+    <script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+    <script>
+        const elt = document.getElementById('calculator');
+        const calculator = Desmos.GraphingCalculator(elt, {
+            expressions: true,
+            settings: {
+                showGrid: true,
+                showXAxis: true,
+                showYAxis: true
+            }
+        });
+
+        calculator.setExpression({
+            id: 'graph1',
+            latex: 'y=x^2'
+        });
+    </script> -->
+
+
+
+</body>
+
+</html>
