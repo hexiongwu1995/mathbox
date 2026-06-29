@@ -1,24 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>MathBox - Hyperbolic Curvature</title>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.137.0/build/three.min.js"></script>
-  <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/controls/OrbitControls.js"></script>
-
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathbox@latest/build/bundle/mathbox.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/dat.gui@latest/build/dat.gui.min.js"></script>
-
-  <link rel="stylesheet" href="mathbox.css" />
-
-</head>
-
-<body>
-  <script>
-    var mathbox = MathBox.mathBox({
+  var mathbox = MathBox.mathBox({
       plugins: ["core", "controls", "cursor"],
       controls: {
         // Orbit controls, i.e. Euler angles, with gimbal lock
@@ -140,7 +120,3 @@
       lineBias: 1,
       opacity: 0.75,
     });
-  </script>
-</body>
-
-</html>
